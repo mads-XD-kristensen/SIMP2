@@ -1,16 +1,15 @@
 {
   "components": [
     {
-      "label": "email",
+      "label": "Email",
       "type": "textfield",
       "layout": {
         "row": "Row_1y12at8",
         "columns": null
       },
       "id": "Field_0twdo5z",
-      "key": "textfield_r0os4e",
-      "description": "Brugerens email",
-      "defaultValue": "email"
+      "key": "email",
+      "description": "Brugerens email"
     },
     {
       "label": "Klage",

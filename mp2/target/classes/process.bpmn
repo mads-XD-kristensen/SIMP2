@@ -11,24 +11,20 @@
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_04dues1" sourceRef="StartEvent_1" targetRef="Activity_0to2qtv" />
     <bpmn:sequenceFlow id="Flow_1xb927i" sourceRef="Activity_0to2qtv" targetRef="Activity_03cq6vd" />
-    <bpmn:serviceTask id="Activity_1urkuel" name="Udfører klageundersøgelsen" camunda:delegateExpression="#{moreComplaint}">
-      <bpmn:incoming>Flow_03rzzgg</bpmn:incoming>
-      <bpmn:outgoing>Flow_10s98d8</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_1akcizz" name="Er klagen godkendt og kan løses">
       <bpmn:incoming>Flow_10s98d8</bpmn:incoming>
       <bpmn:outgoing>Flow_17ec5pw</bpmn:outgoing>
       <bpmn:outgoing>Flow_0khokbm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_10s98d8" sourceRef="Activity_1urkuel" targetRef="Gateway_1akcizz" />
-    <bpmn:userTask id="Activity_0ikkb60" name="Løsning af klagen og underretning til kunden">
+    <bpmn:userTask id="Activity_0ikkb60" name="Løsning af klagen og underretning til kunden" camunda:formKey="camunda-forms:/forms/solution.form">
       <bpmn:incoming>Flow_17ec5pw</bpmn:incoming>
       <bpmn:incoming>Flow_0qpq7ea</bpmn:incoming>
       <bpmn:incoming>Flow_0vaxygs</bpmn:incoming>
       <bpmn:outgoing>Flow_1ammd6g</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_17ec5pw" name="Godkendt" sourceRef="Gateway_1akcizz" targetRef="Activity_0ikkb60">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">true</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${enoughInfo==true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Activity_098k973" name="Klage løst Email sendes til kunden" camunda:delegateExpression="#{complaintSuccess}">
       <bpmn:incoming>Flow_1ammd6g</bpmn:incoming>
@@ -39,12 +35,12 @@
       <bpmn:incoming>Flow_1bcxt1s</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1bcxt1s" sourceRef="Activity_098k973" targetRef="Event_1alpez0" />
-    <bpmn:userTask id="Activity_1utx5tc" name="Manager underrettes">
+    <bpmn:userTask id="Activity_1utx5tc" name="Manager underrettes" camunda:formKey="camunda-forms:/forms/manager.form">
       <bpmn:incoming>Flow_0khokbm</bpmn:incoming>
       <bpmn:outgoing>Flow_1xqzqn3</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0khokbm" name="Afvist" sourceRef="Gateway_1akcizz" targetRef="Activity_1utx5tc">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">false</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${enoughInfo==false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_0zd4q1s" name="Kan manager løse klagen?">
       <bpmn:incoming>Flow_1xqzqn3</bpmn:incoming>
@@ -57,7 +53,7 @@
       <bpmn:outgoing>Flow_14h0kzt</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_0fbee1u" name="Nej" sourceRef="Gateway_0zd4q1s" targetRef="Activity_0dakahx">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">false</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${managerSolution==false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Activity_1xjk4ko" name="Klage ikke løst, Email sendes til kunden" camunda:delegateExpression="#{complaintFail}">
       <bpmn:incoming>Flow_14h0kzt</bpmn:incoming>
@@ -69,7 +65,7 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1v5da2m" sourceRef="Activity_1xjk4ko" targetRef="Event_1h4gos2" />
     <bpmn:sequenceFlow id="Flow_0qpq7ea" name="Ja" sourceRef="Gateway_0zd4q1s" targetRef="Activity_0ikkb60">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">true</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${managerSolution==true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:businessRuleTask id="Activity_03cq6vd" name="Indberette til kundeservice" camunda:delegateExpression="#{complaintService}">
       <bpmn:incoming>Flow_1xb927i</bpmn:incoming>
@@ -87,6 +83,10 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isSuccessful==true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1uuyk0x" sourceRef="Activity_03cq6vd" targetRef="Gateway_1nomvnc" />
+    <bpmn:userTask id="Activity_1urkuel" name="Udfører klageundersøgelsen" camunda:formKey="camunda-forms:/forms/extraInfo.form">
+      <bpmn:incoming>Flow_03rzzgg</bpmn:incoming>
+      <bpmn:outgoing>Flow_10s98d8</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1b0zh29">
@@ -100,10 +100,6 @@
         <dc:Bounds x="260" y="317" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1urkuel_di" bpmnElement="Activity_1urkuel">
-        <dc:Bounds x="760" y="317" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1akcizz_di" bpmnElement="Gateway_1akcizz" isMarkerVisible="true">
         <dc:Bounds x="955" y="332" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -112,10 +108,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ikkb60_di" bpmnElement="Activity_0ikkb60">
         <dc:Bounds x="1100" y="317" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_098k973_di" bpmnElement="Activity_098k973">
-        <dc:Bounds x="1300" y="317" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1alpez0_di" bpmnElement="Event_1alpez0">
@@ -157,6 +149,13 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="605" y="290" width="70" height="40" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_098k973_di" bpmnElement="Activity_098k973">
+        <dc:Bounds x="1300" y="317" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1t4juy2_di" bpmnElement="Activity_1urkuel">
+        <dc:Bounds x="760" y="317" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_04dues1_di" bpmnElement="Flow_04dues1">
         <di:waypoint x="208" y="357" />

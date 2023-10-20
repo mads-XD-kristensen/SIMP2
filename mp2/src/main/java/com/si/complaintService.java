@@ -13,14 +13,14 @@ public class complaintService implements JavaDelegate {
         String complaint = (String) execution.getVariable("klage");
 
         // Check om complaint er null eller ej
-        if (complaint != null) {
-            // Successfuld behandling
-            System.out.println("Successfuld behandling (true)");
+        if (complaint.length() > 10) {
+
+            System.out.println("Successfuld behandling (false)");
             // Her kan du tilføje yderligere logik eller handlinger, der skal udføres
             execution.setVariable("isSuccessful", false);
         } else {
-            // Mislykket behandling
-            System.out.println("Mislykket behandling (false)");
+
+            System.out.println("Mislykket behandling (true)");
             // Her kan du tilføje yderligere logik eller handlinger, der skal udføres i tilfælde af mislykket behandling
             execution.setVariable("isSuccessful", true);
         }

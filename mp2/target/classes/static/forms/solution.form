@@ -4,38 +4,46 @@
       "label": "Email",
       "type": "textfield",
       "layout": {
-        "row": "Row_1y12at8",
+        "row": "Row_18p6pgk",
         "columns": null
       },
-      "id": "Field_0twdo5z",
+      "id": "Field_1db2rd8",
       "key": "email",
       "description": "Brugerens email"
     },
     {
-      "label": "Klage",
+      "label": "Brugerens klage",
       "type": "textfield",
       "layout": {
-        "row": "Row_1k8paos",
+        "row": "Row_0q97ths",
         "columns": null
       },
-      "id": "Field_1hux92l",
-      "key": "klage",
-      "description": "Brugerens klage"
+      "id": "Field_0t4n2ej",
+      "key": "klage"
+    },
+    {
+      "label": "Løsning",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0rvcfk5",
+        "columns": null
+      },
+      "id": "Field_028jbd5",
+      "key": "klageSvar"
     },
     {
       "action": "submit",
-      "label": "Send klage",
+      "label": "Svar",
       "type": "button",
       "layout": {
-        "row": "Row_10b5uy6",
+        "row": "Row_050hz6u",
         "columns": null
       },
-      "id": "Field_1i2ts2s",
-      "properties": {}
+      "id": "Field_1ubhqk1"
     }
   ],
   "type": "default",
-  "id": "klageForm",
+  "id": "solutionForm",
   "exporter": {
     "name": "Camunda Modeler",
     "version": "5.16.0"
