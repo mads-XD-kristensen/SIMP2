@@ -4,7 +4,7 @@
     <bpmn:startEvent id="StartEvent_1" name="Modtager klage">
       <bpmn:outgoing>Flow_04dues1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_0to2qtv" name="Registrer klagen og indsamler oplysninger" camunda:formKey="camunda-forms:/forms/klage.form">
+    <bpmn:userTask id="Activity_0to2qtv" name="Registrer klagen og indsamler oplysninger" camunda:formKey="camunda-forms:/forms/klage.form" camunda:assignee="admin">
       <bpmn:extensionElements />
       <bpmn:incoming>Flow_04dues1</bpmn:incoming>
       <bpmn:outgoing>Flow_1xb927i</bpmn:outgoing>
@@ -17,7 +17,7 @@
       <bpmn:outgoing>Flow_0khokbm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_10s98d8" sourceRef="Activity_1urkuel" targetRef="Gateway_1akcizz" />
-    <bpmn:userTask id="Activity_0ikkb60" name="Løsning af klagen og underretning til kunden" camunda:formKey="camunda-forms:/forms/solution.form">
+    <bpmn:userTask id="Activity_0ikkb60" name="Løsning af klagen og underretning til kunden" camunda:formKey="camunda-forms:/forms/solution.form" camunda:assignee="admin">
       <bpmn:incoming>Flow_17ec5pw</bpmn:incoming>
       <bpmn:incoming>Flow_0qpq7ea</bpmn:incoming>
       <bpmn:incoming>Flow_0vaxygs</bpmn:incoming>
@@ -35,7 +35,7 @@
       <bpmn:incoming>Flow_1bcxt1s</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1bcxt1s" sourceRef="Activity_098k973" targetRef="Event_1alpez0" />
-    <bpmn:userTask id="Activity_1utx5tc" name="Manager underrettes" camunda:formKey="camunda-forms:/forms/manager.form">
+    <bpmn:userTask id="Activity_1utx5tc" name="Manager underrettes" camunda:formKey="camunda-forms:/forms/manager.form" camunda:assignee="admin">
       <bpmn:incoming>Flow_0khokbm</bpmn:incoming>
       <bpmn:outgoing>Flow_1xqzqn3</bpmn:outgoing>
     </bpmn:userTask>
@@ -78,7 +78,7 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${isSuccessful==true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1uuyk0x" sourceRef="Activity_03cq6vd" targetRef="Gateway_1nomvnc" />
-    <bpmn:userTask id="Activity_1urkuel" name="Udfører klageundersøgelsen" camunda:formKey="camunda-forms:/forms/extraInfo.form">
+    <bpmn:userTask id="Activity_1urkuel" name="Udfører klageundersøgelsen" camunda:formKey="camunda-forms:/forms/extraInfo.form" camunda:assignee="admin">
       <bpmn:incoming>Flow_03rzzgg</bpmn:incoming>
       <bpmn:outgoing>Flow_10s98d8</bpmn:outgoing>
     </bpmn:userTask>
