@@ -7,16 +7,14 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
-import jakarta.activation.*;
 import java.util.Date;
 import java.util.Properties;
 
 @Component
 public class complaintMail implements JavaDelegate {
 
-    public static void sendEmail(Session session, String toEmail, String subject, String body){
-        try
-        {
+    public static void sendEmail(Session session, String toEmail, String subject, String body) {
+        try {
             MimeMessage msg = new MimeMessage(session);
 
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
@@ -38,8 +36,7 @@ public class complaintMail implements JavaDelegate {
             Transport.send(msg);
 
             System.out.println("EMail Sent Successfully!!");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -67,16 +64,16 @@ public class complaintMail implements JavaDelegate {
 
         Session session = Session.getInstance(props, auth);
 
-        try { // måden vi håndtere om en klage kan løses er gennem en variable som kommer fra camunda, som hedder
-              // managerSolution. Den eneste måde at en klage bliver lavet som ikke løselig, er hvis en manager
-              // har kigget på klagen, og derved bliver variablen sat til false. Variablen styrrer så hvilken slags mail der skal sendes tilbage
+        try { // måden vi håndtere om en klage kan løses er gennem en variabel, som kommer fra camunda, som hedder
+            // managerSolution. Den eneste måde at en klage bliver lavet som ikke løselig, er hvis en manager
+            // har kigget på klagen, og derved bliver variablen sat til false. Variablen styrer så hvilken slags mail, der skal sendes tilbage
             solution = (boolean) delegateExecution.getVariable("managerSolution");
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
-        // Mangler nogle lidt mere specifikke svar når der sendes email
-        if (solution == false){
+        // Mangler nogle lidt mere specifikke svar, når der sendes email
+        if (solution == false) {
             sendEmail(session, kundeEmail, "Klage kunne ikke løses", "Din klage kunne desværre ikke løses lige i øjeblikket :)");
         } else {
             sendEmail(session, kundeEmail, "Klage er løst", "Din klage er blevet løst :)");

@@ -14,10 +14,10 @@ public class complaintService implements JavaDelegate {
 
         // Check om complaint er null eller ej
         if (complaint.length() > 10) {
-            // Lige nu er en "god" klage, som kan løses, over 10 karaktere lang burde nok være mere indviklet
+            // Lige nu er en "god" klage, som kan løses, over 10 karakterer lang. Burde nok være mere indviklet
             // logik til at bestemme hvordan klager skal håndteres, men det har vi ikke fået lavet.
 
-            System.out.println("Successfuld behandling (false)");
+            System.out.println("Succesfuld behandling (false)");
             // Her kan du tilføje yderligere logik eller handlinger, der skal udføres
             execution.setVariable("isSuccessful", false);
         } else {
