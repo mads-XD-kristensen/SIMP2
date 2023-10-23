@@ -18,7 +18,7 @@ public class complaintMail implements JavaDelegate {
         try
         {
             MimeMessage msg = new MimeMessage(session);
-            //set message headers
+
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
             msg.addHeader("format", "flowed");
             msg.addHeader("Content-Transfer-Encoding", "8bit");
@@ -59,7 +59,7 @@ public class complaintMail implements JavaDelegate {
         props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
 
         Authenticator auth = new Authenticator() {
-            //override the getPasswordAuthentication method
+
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, password);
             }
@@ -67,12 +67,15 @@ public class complaintMail implements JavaDelegate {
 
         Session session = Session.getInstance(props, auth);
 
-        try {
+        try { // måden vi håndtere om en klage kan løses er gennem en variable som kommer fra camunda, som hedder
+              // managerSolution. Den eneste måde at en klage bliver lavet som ikke løselig, er hvis en manager
+              // har kigget på klagen, og derved bliver variablen sat til false. Variablen styrrer så hvilken slags mail der skal sendes tilbage
             solution = (boolean) delegateExecution.getVariable("managerSolution");
         } catch (Exception e){
             System.out.println(e);
         }
 
+        // Mangler nogle lidt mere specifikke svar når der sendes email
         if (solution == false){
             sendEmail(session, kundeEmail, "Klage kunne ikke løses", "Din klage kunne desværre ikke løses lige i øjeblikket :)");
         } else {
