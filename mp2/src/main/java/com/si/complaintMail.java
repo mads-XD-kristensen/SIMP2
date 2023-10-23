@@ -69,11 +69,11 @@ public class complaintMail implements JavaDelegate {
             // har kigget på klagen, og derved bliver variablen sat til false. Variablen styrer så hvilken slags mail, der skal sendes tilbage
             solution = (boolean) delegateExecution.getVariable("managerSolution");
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         // Mangler nogle lidt mere specifikke svar, når der sendes email
-        if (solution == false) {
+        if (!solution) {
             sendEmail(session, kundeEmail, "Klage kunne ikke løses", "Din klage kunne desværre ikke løses lige i øjeblikket :)");
         } else {
             sendEmail(session, kundeEmail, "Klage er løst", "Din klage er blevet løst :)");
